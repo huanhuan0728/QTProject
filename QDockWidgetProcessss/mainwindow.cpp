@@ -35,6 +35,7 @@ void MainWindow::DockWidgetFunc()
 
     QTextEdit * qtEdit2 = new QTextEdit();
     qtEdit2->setText("内容2");
+    dw2->setFeatures(QDockWidget::DockWidgetMovable);
     dw2->setWidget(qtEdit2);
     addDockWidget(Qt::RightDockWidgetArea, dw2);
 
