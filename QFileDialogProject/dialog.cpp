@@ -27,22 +27,30 @@ Dialog::Dialog(QWidget *parent)
     glayout->addWidget(fileSizeLabelLineEdit, 1, 1, 1, 2);
 
     //QHBoxLayout *hlayout = new QHBoxLayout();
-    QHBoxLayout *hlayout = new QHBoxLayout(this);
+    QHBoxLayout *hlayout = new QHBoxLayout();
     hlayout->addWidget(getFileInfoButton);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->addLayout(glayout);
     vlayout->addLayout(hlayout);
 
+    connect(fileButton, SIGNAL(clicked()), this, SLOT(getFileInfoFunc()));
+    connect(getFileInfoButton, SIGNAL(clicked(bool)), this, SLOT(getFileSizeFunc()));
 }
 
 Dialog::~Dialog() {}
 
 void Dialog::getFileInfoFunc()//用于打开文件
 {
+    QString fileName = QFileDialog::getOpenFileName(this, "打开", "/", "File(*)");
+    fileNameLineEdit->setText(fileName);
 
 }
 void Dialog::getFileSizeFunc()//用于获取文件大小
 {
-
+    QString fileName = fileNameLineEdit->text();
+    QFileInfo fileInfo(fileName);
+    qint64 size = fileInfo.size();
+    QString sizeStr = QString::number(size) + "Bity";
+    fileSizeLabelLineEdit->setText(sizeStr);
 }
